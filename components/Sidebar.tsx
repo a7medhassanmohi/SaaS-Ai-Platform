@@ -1,6 +1,6 @@
 "use client"
 import { cn } from '@/lib/utils'
-import { Code, ImageIcon, LayoutDashboard, MessageSquare, Music, Settings, VideoIcon } from 'lucide-react'
+import { Code, ImageIcon, LayoutDashboard, MessageSquare, Music, Settings, VideoIcon, } from 'lucide-react'
 import { Inter, Poppins,Montserrat } from 'next/font/google'
 import Image from 'next/image'
 import Link from 'next/link'
