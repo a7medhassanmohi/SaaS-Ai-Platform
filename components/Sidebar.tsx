@@ -4,6 +4,7 @@ import { Code, ImageIcon, LayoutDashboard, MessageSquare, Music, Settings, Video
 import { Inter, Poppins,Montserrat } from 'next/font/google'
 import Image from 'next/image'
 import Link from 'next/link'
+import { usePathname } from 'next/navigation'
 import React from 'react'
 const montserrat = Montserrat({ subsets: ['latin'],weight:"600" })
 type Props = {}
@@ -61,6 +62,8 @@ const routes:RouteType[] = [
   
 
 const Sidebar = (props: Props) => {
+  const pathname = usePathname();
+
   return (
     <div className="space-y-4 py-4 flex flex-col h-full bg-[#111827] text-white">
          <div className="px-3 py-2 flex-1">
@@ -81,7 +84,7 @@ const Sidebar = (props: Props) => {
               href={route.href}
               className={cn(
                 "text-sm group flex p-3 w-full justify-start font-medium cursor-pointer hover:text-white hover:bg-white/10 rounded-lg transition",
-                "text-zinc-400",
+                pathname === route.href ? "text-white bg-white/10" : "text-zinc-400"
               )}
             >
               <div className="flex items-center flex-1">
