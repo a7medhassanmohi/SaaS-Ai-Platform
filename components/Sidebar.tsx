@@ -70,7 +70,7 @@ const Sidebar = (props: Props) => {
         {/* logo */}
          <Link href="/dashboard" className="flex items-center pl-3 mb-14">
           <div className="relative h-8 w-8 mr-4">
-            <Image fill alt="Logo" src="/logo.png" />
+            <Image fill alt="Logo" src="/logo.png"  sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw" />
           </div>
           <h1 className={cn("text-2xl font-bold", montserrat.className)}>
             Genius
