@@ -10,16 +10,16 @@ import { Input } from "@/components/ui/input";
 import { cn } from "@/lib/utils";
 import { zodResolver } from "@hookform/resolvers/zod";
 import axios from "axios";
-import { Music } from "lucide-react";
+import { FileAudio, Music, VideoIcon } from "lucide-react";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
 import { useForm } from "react-hook-form";
 import { formSchema, formSchemaType } from "./constants";
 type Props = {};
 
-const MusicGeneration = ({}: Props) => {
+const VideoGeneration = ({}: Props) => {
     const router = useRouter();
-    const [music, setMusic] = useState<string>();
+    const [video, setVideo] = useState<string>();
 
   const form = useForm<formSchemaType>({
     defaultValues: {
@@ -30,10 +30,10 @@ const MusicGeneration = ({}: Props) => {
   const isLoading = form.formState.isSubmitting;
   const onSubmit = async (values: formSchemaType) => {
 try {
-  setMusic(undefined)
-    const response = await axios.post('/api/music',values );
+  setVideo(undefined)
+    const response = await axios.post('/api/video',values );
     
-    setMusic(response.data.audio)
+    setVideo(response.data[0])
     form.reset();
 } catch (error) {
     console.log(error)
@@ -47,11 +47,11 @@ router.refresh();
   return (
     <div>
       <Heading
-        title="Music Generation"
-        description="Turn your prompt into music."
-        icon={Music}
-        iconColor="text-emerald-500"
-        bgColor="bg-emerald-500/10"
+        title="Video Generation "
+        description="Turn your prompt into Video."
+        icon={VideoIcon}
+        iconColor="text-orange-700"
+        bgColor="bg-orange-700/10"
       />
       <div className="px-4 lg:px-8">
         <div>
@@ -79,7 +79,7 @@ router.refresh();
                       <Input
                         className="border-0 outline-none focus-visible:ring-0 focus-visible:ring-transparent"
                         disabled={isLoading}
-                        placeholder="Piano solo"
+                        placeholder="Clown fish swimming in a coral reef"
                         {...field}
                       />
                     </FormControl>
@@ -104,13 +104,13 @@ router.refresh();
               <Loader />
             </div>
           )}
-            {!music && !isLoading && (
-            <Empty label="No Music started." />
+            {!video && !isLoading && (
+            <Empty label="No video Generated." />
           )}
-          {music && (
-          <audio controls className="w-full mt-8">
-            <source src={music} />
-          </audio>
+          {video && (
+          <video controls className="w-full aspect-video mt-8 rounded-lg border bg-black">
+          <source src={video} />
+        </video>
         )}
           </div>
         </div>
@@ -119,4 +119,4 @@ router.refresh();
   );
 };
 
-export default MusicGeneration;
+export default VideoGeneration;

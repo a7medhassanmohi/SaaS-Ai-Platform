@@ -114,7 +114,7 @@ const CodeGeneration = ({}: Props) => {
               </div>
             )}
             {messages.length === 0 && !isLoading && (
-              <Empty label="No conversation started." />
+              <Empty label="No Code Generated." />
             )}
             {messages.map((message) => (
               <div

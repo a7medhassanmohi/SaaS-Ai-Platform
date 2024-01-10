@@ -39,7 +39,6 @@ const ImageGenerator = ({}: Props) => {
 try {
     setPhotos([])
     const response = await axios.post('/api/image',values);
-    console.log(response);
     
     const urls = response.data.map((image: { url: string }) => image.url);
     setPhotos(urls);
