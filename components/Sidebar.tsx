@@ -6,8 +6,11 @@ import Image from 'next/image'
 import Link from 'next/link'
 import { usePathname } from 'next/navigation'
 import React from 'react'
+import FreeCounter from './FreeCounter'
 const montserrat = Montserrat({ subsets: ['latin'],weight:"600" })
-type Props = {}
+type Props = {
+  apiLimitCount:number
+}
  type RouteType={
     label:string,
     icon: React.ElementType,
@@ -61,7 +64,7 @@ const routes:RouteType[] = [
   ];
   
 
-const Sidebar = (props: Props) => {
+const Sidebar = ({apiLimitCount=0}: Props) => {
   const pathname = usePathname();
 
   return (
@@ -95,6 +98,7 @@ const Sidebar = (props: Props) => {
           ))}
         </div>
          </div>
+         <FreeCounter apiLimitCount={apiLimitCount} />
     </div>
   )
 }
