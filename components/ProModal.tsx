@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useState } from 'react'
 import { Dialog, DialogContent, DialogDescription, DialogFooter, DialogHeader, DialogTitle } from './ui/dialog'
 import { Check, Zap } from 'lucide-react'
 import { Button } from './ui/button'
@@ -7,11 +7,26 @@ import { tools } from '@/constants'
 import { Card } from './ui/card'
 import { cn } from '@/lib/utils'
 import { useProModal } from '@/hooks/use-pro-modal'
+import axios from 'axios'
 
 type Props = {}
 
 const ProModal = (props: Props) => {
   const {isOpen,onClose,onOpen} = useProModal();
+  const [loading, setLoading] = useState(false);
+
+  const onSubscribe = async () => {
+    try {
+      setLoading(true);
+      const response = await axios.get("/api/stripe");
+
+      window.location.href = response.data.url;
+    } catch (error) {
+      // toast.error("Something went wrong");
+    } finally {
+      setLoading(false);
+    }
+  }
   return (
     <Dialog open={isOpen} onOpenChange={onClose}>
     <DialogContent>
@@ -41,7 +56,7 @@ const ProModal = (props: Props) => {
         </DialogDescription>
       </DialogHeader>
       <DialogFooter>
-        <Button size="lg" variant="premium" className="w-full" >
+        <Button disabled={loading} onClick={onSubscribe} size="lg" variant="premium" className="w-full" >
           Upgrade
           <Zap className="w-4 h-4 ml-2 fill-white" />
         </Button>
