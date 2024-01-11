@@ -19,9 +19,12 @@ import BotAvatar from "@/components/BotAvatar";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { Card, CardFooter } from "@/components/ui/card";
 import Image from "next/image";
+import { useProModal } from "@/hooks/use-pro-modal";
 type Props = {};
 
 const ImageGenerator = ({}: Props) => {
+  const { isOpen, onClose, onOpen } = useProModal();
+
     const router = useRouter();
     const [photos, setPhotos] = useState<string[]>([]);
 
@@ -44,8 +47,10 @@ try {
     setPhotos(urls);
 
     form.reset();
-} catch (error) {
-    console.log(error)
+} catch (error:any) {
+  if (error?.response?.status === 403) {
+    onOpen();
+  }
     
 }finally{
 router.refresh();

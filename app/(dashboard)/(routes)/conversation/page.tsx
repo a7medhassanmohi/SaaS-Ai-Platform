@@ -16,9 +16,11 @@ import { Loader } from "@/components/Loader";
 import Empty from "@/components/Empty";
 import UserAvatar from "@/components/UserAvatar";
 import BotAvatar from "@/components/BotAvatar";
+import { useProModal } from "@/hooks/use-pro-modal";
 type Props = {};
 
 const Conversation = ({}: Props) => {
+  const { isOpen, onClose, onOpen } = useProModal();
     const router = useRouter();
     const [messages, setMessages] = useState<{role:string,content:string}[]>([]);
 
@@ -37,8 +39,10 @@ try {
     
     setMessages((current) => [...current, userMessage, response?.data?.message    ]);
     form.reset();
-} catch (error) {
-    console.log(error)
+} catch (error:any) {
+  if (error?.response?.status === 403) {
+    onOpen();
+  }
     
 }finally{
 router.refresh();

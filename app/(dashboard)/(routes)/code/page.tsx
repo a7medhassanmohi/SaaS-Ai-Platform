@@ -15,13 +15,15 @@ import { Loader } from "@/components/Loader";
 import Empty from "@/components/Empty";
 import UserAvatar from "@/components/UserAvatar";
 import BotAvatar from "@/components/BotAvatar";
-import ReactMarkdown from 'react-markdown';
-
+import ReactMarkdown from "react-markdown";
+import { useProModal } from "@/hooks/use-pro-modal";
 
 type Props = {};
 
 const CodeGeneration = ({}: Props) => {
   const router = useRouter();
+  const { isOpen, onClose, onOpen } = useProModal();
+
   const [messages, setMessages] = useState<{ role: string; content: string }[]>(
     []
   );
@@ -45,13 +47,14 @@ const CodeGeneration = ({}: Props) => {
         response?.data?.message,
       ]);
       form.reset();
-    } catch (error) {
-      console.log(error);
+    } catch (error: any) {
+      if (error?.response?.status === 403) {
+        onOpen();
+      }
     } finally {
       router.refresh();
     }
   };
-
 
   return (
     <div>
@@ -127,16 +130,19 @@ const CodeGeneration = ({}: Props) => {
                 )}
               >
                 {message.role === "user" ? <UserAvatar /> : <BotAvatar />}
-                <ReactMarkdown components={{
-                  pre: ({ node, ...props }) => (
-                    <div className="overflow-auto w-full my-2 bg-black/10 p-2 rounded-lg">
-                      <pre {...props} />
-                    </div>
-                  ),
-                  code: ({ node, ...props }) => (
-                    <code className="bg-black/10 rounded-lg p-1" {...props} />
-                  )
-                }} className="text-sm overflow-hidden leading-7">
+                <ReactMarkdown
+                  components={{
+                    pre: ({ node, ...props }) => (
+                      <div className="overflow-auto w-full my-2 bg-black/10 p-2 rounded-lg">
+                        <pre {...props} />
+                      </div>
+                    ),
+                    code: ({ node, ...props }) => (
+                      <code className="bg-black/10 rounded-lg p-1" {...props} />
+                    ),
+                  }}
+                  className="text-sm overflow-hidden leading-7"
+                >
                   {message.content || ""}
                 </ReactMarkdown>
               </div>

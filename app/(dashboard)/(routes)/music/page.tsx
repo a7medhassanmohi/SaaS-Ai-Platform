@@ -15,9 +15,11 @@ import { useRouter } from "next/navigation";
 import { useState } from "react";
 import { useForm } from "react-hook-form";
 import { formSchema, formSchemaType } from "./constants";
+import { useProModal } from "@/hooks/use-pro-modal";
 type Props = {};
 
 const MusicGeneration = ({}: Props) => {
+  const { isOpen, onClose, onOpen } = useProModal();
     const router = useRouter();
     const [music, setMusic] = useState<string>();
 
@@ -35,8 +37,10 @@ try {
     
     setMusic(response.data.audio)
     form.reset();
-} catch (error) {
-    console.log(error)
+} catch (error:any) {
+  if (error?.response?.status === 403) {
+    onOpen();
+  }
     
 }finally{
 router.refresh();
