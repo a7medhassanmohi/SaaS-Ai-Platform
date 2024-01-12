@@ -15,6 +15,7 @@ export default async function DashBoardLayout({
 }: {
   children: React.ReactNode
 }) {
+
   const apiLimitCount = await getApiLimitCount();
   const isPro = await checkSubscription();
   return (
