@@ -8,6 +8,7 @@ import { Card } from './ui/card'
 import { cn } from '@/lib/utils'
 import { useProModal } from '@/hooks/use-pro-modal'
 import axios from 'axios'
+import { toast } from './ui/use-toast'
 
 type Props = {}
 
@@ -22,7 +23,12 @@ const ProModal = (props: Props) => {
 
       window.location.href = response.data.url;
     } catch (error) {
-      // toast.error("Something went wrong");
+
+        toast({
+          title: "error",
+          description: "Something went wrong",
+        });
+     
     } finally {
       setLoading(false);
     }

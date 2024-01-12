@@ -20,6 +20,7 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@
 import { Card, CardFooter } from "@/components/ui/card";
 import Image from "next/image";
 import { useProModal } from "@/hooks/use-pro-modal";
+import { toast } from "@/components/ui/use-toast";
 type Props = {};
 
 const ImageGenerator = ({}: Props) => {
@@ -50,6 +51,11 @@ try {
 } catch (error:any) {
   if (error?.response?.status === 403) {
     onOpen();
+  }else{
+    toast({
+      title: "error",
+      description: "Something went wrong",
+    });
   }
     
 }finally{

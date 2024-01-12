@@ -16,6 +16,7 @@ import { useState } from "react";
 import { useForm } from "react-hook-form";
 import { formSchema, formSchemaType } from "./constants";
 import { useProModal } from "@/hooks/use-pro-modal";
+import { toast } from "@/components/ui/use-toast";
 type Props = {};
 
 const VideoGeneration = ({}: Props) => {
@@ -40,6 +41,11 @@ try {
 } catch (error:any) {
   if (error?.response?.status === 403) {
     onOpen();
+  }else{
+    toast({
+      title: "error",
+      description: "Something went wrong",
+    });
   }
     
 }finally{

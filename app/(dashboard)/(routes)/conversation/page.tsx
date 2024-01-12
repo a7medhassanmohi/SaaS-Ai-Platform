@@ -17,6 +17,7 @@ import Empty from "@/components/Empty";
 import UserAvatar from "@/components/UserAvatar";
 import BotAvatar from "@/components/BotAvatar";
 import { useProModal } from "@/hooks/use-pro-modal";
+import { toast } from "@/components/ui/use-toast";
 type Props = {};
 
 const Conversation = ({}: Props) => {
@@ -42,6 +43,11 @@ try {
 } catch (error:any) {
   if (error?.response?.status === 403) {
     onOpen();
+  }else{
+    toast({
+      title: "error",
+      description: "Something went wrong",
+    });
   }
     
 }finally{

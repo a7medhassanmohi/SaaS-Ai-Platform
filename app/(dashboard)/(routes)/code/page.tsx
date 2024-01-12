@@ -17,6 +17,7 @@ import UserAvatar from "@/components/UserAvatar";
 import BotAvatar from "@/components/BotAvatar";
 import ReactMarkdown from "react-markdown";
 import { useProModal } from "@/hooks/use-pro-modal";
+import { toast } from "@/components/ui/use-toast";
 
 type Props = {};
 
@@ -50,6 +51,11 @@ const CodeGeneration = ({}: Props) => {
     } catch (error: any) {
       if (error?.response?.status === 403) {
         onOpen();
+      }else{
+        toast({
+          title: "error",
+          description: "Something went wrong",
+        });
       }
     } finally {
       router.refresh();
