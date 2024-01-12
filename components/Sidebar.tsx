@@ -9,7 +9,8 @@ import React from 'react'
 import FreeCounter from './FreeCounter'
 const montserrat = Montserrat({ subsets: ['latin'],weight:"600" })
 type Props = {
-  apiLimitCount:number
+  apiLimitCount:number,
+  isPro:boolean
 }
  type RouteType={
     label:string,
@@ -64,7 +65,7 @@ const routes:RouteType[] = [
   ];
   
 
-const Sidebar = ({apiLimitCount=0}: Props) => {
+const Sidebar = ({apiLimitCount=0,isPro=false}: Props) => {
   const pathname = usePathname();
 
   return (
@@ -98,7 +99,7 @@ const Sidebar = ({apiLimitCount=0}: Props) => {
           ))}
         </div>
          </div>
-         <FreeCounter apiLimitCount={apiLimitCount} />
+         <FreeCounter apiLimitCount={apiLimitCount} isPro={isPro} />
     </div>
   )
 }

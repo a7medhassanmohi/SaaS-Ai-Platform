@@ -1,4 +1,5 @@
 import { checkApiLimit, incrementApiLimit } from "@/lib/api-limit";
+import { checkSubscription } from "@/lib/subscription";
 import { auth } from "@clerk/nextjs";
 import { NextResponse } from "next/server";
 
@@ -30,7 +31,8 @@ const instruction={
             return new NextResponse("Messages are required", { status: 400 });
           }
           const freeTrial = await checkApiLimit();
-          if (!freeTrial ) {
+          const isPro = await checkSubscription();
+          if (!freeTrial && !isPro ) {
             return new NextResponse("Free trial has expired. Please upgrade to pro.", { status: 403 });
           }
 
@@ -39,7 +41,10 @@ const instruction={
             model: 'gpt-3.5-turbo',
             messages:[instruction,...messages]
           })
-          await incrementApiLimit();
+          if (!isPro) {
+
+            await incrementApiLimit();
+          }
           return NextResponse.json(response.choices[0]);
         
     } catch (error) {

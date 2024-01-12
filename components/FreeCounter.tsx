@@ -7,10 +7,11 @@ import { Progress } from './ui/progress';
 import { useProModal } from '@/hooks/use-pro-modal';
 
 type Props = {
-    apiLimitCount:number
+    apiLimitCount:number,
+    isPro:boolean
 }
 
-const FreeCounter = ({apiLimitCount}: Props) => {
+const FreeCounter = ({apiLimitCount,isPro=false}: Props) => {
     const [mounted, setMounted] = useState(false);
   const {isOpen,onClose,onOpen} = useProModal();
 
@@ -19,6 +20,9 @@ const FreeCounter = ({apiLimitCount}: Props) => {
       }, []);
     
       if (!mounted) {
+        return null;
+      }
+      if (isPro) {
         return null;
       }
       
